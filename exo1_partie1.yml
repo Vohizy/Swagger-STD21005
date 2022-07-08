@@ -1,0 +1,81 @@
+openapi: 3.0.1
+info:
+  title: STD21005
+  description: >-
+    Hello world
+  version: 1.0.0
+
+servers:
+  - url: https://STD21005.com
+paths:
+  /student: 
+    get:
+      tags:
+        - student
+      summary: Get all students
+      operationId: getStudent
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: page_size
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreateStudent'
+        '400':
+          description: Bad request
+    post:
+      tags:
+        - student
+      summary: Create new students
+      operationId: createStudent
+      description: Create new students from an array
+      requestBody:
+        description: Student to be created
+        content:
+          application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        required: true
+      responses:  
+        '200':
+            description: List of students
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CreateStudent'
+        '400':
+            description: Bad request
+components:
+  schemas:
+    CreateStudent:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      xml:
+        name: CreateStudent
+    Student:
+      type: object
+      properties:
+        name:
+          type: string
+      xml:
+        name: Student
